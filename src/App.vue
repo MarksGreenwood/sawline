@@ -1,32 +1,27 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app" class="d-flex flex-column h-100 sidebar-nontoggled">
+        <menubar/>
+        <div class="container-fluid p-0">
+            <sidebar/>
+            <topbar/>
+        </div>
+        <router-view/>
+        <pagefooter/>  
     </div>
-    <router-view/>
-  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import menubar from '@/components/menubar';
+import pagefooter from '@/components/pagefooter';
+import sidebar from '@/components/sidebar'
+import topbar from '@/components/topbar'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+    components:{
+        menubar, 
+        pagefooter,
+        sidebar,
+        topbar
     }
-  }
 }
-</style>
+</script>

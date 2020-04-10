@@ -1,0 +1,106 @@
+@import '~bootstrap/scss/bootstrap';
+
+html,body, .application-wrapper, #app {
+    height: 100% !important;
+}
+
+/* Bootstrap adjustments */
+.dropdown-menu{
+    border-radius: .5rem !important;
+}
+
+/* Image sizing */
+.img-size10{height: 10px}
+.img-size20{height: 20px}
+.img-size30{height: 30px}
+.img-size40{height: 40px}
+.img-size50{height: 50px}
+.img-size60{height: 60px}
+.img-size80{height: 80px}
+.img-size90{height: 90px}
+.img-size100{height: 100px}
+.img-size110{height: 110px}
+.img-size120{height: 120px}
+.img-size130{height: 130px}
+.img-size140{height: 140px}
+.img-size150{height: 150px}
+
+/* custom text colour */
+.hover-text-gray-150:hover{
+    color: rgba(150,150,150,1) !important;
+}
+
+.text-gray-400 {
+    color: #d1d3e2 !important;
+  }
+
+/* Social media */
+.btn-socialmedia{
+    width: 40px;
+}
+
+/* Social media */
+.btn-socialmedia{
+    width: 40px;
+}
+
+.facebook{
+    border-color: rgba(66,103,178,1);
+    background-color: rgba(66,103,178,1);
+    margin-bottom: 20px;
+}
+ 
+.twitter{
+    border-color: rgba(29,161,242,1);
+    background-color: rgba(29,161,242,1);
+    margin-bottom: 20px;
+}
+
+.google{
+    border-color: rgba(234,67,53,1);
+    background-color: rgba(234,67,53,1);
+    margin-bottom: 20px;
+}
+
+.linkedin{
+    border-color: rgba(0,119,181,1);
+    background-color: rgba(0,119,181,1);
+    margin-bottom: 20px;
+}
+
+.microsoft{
+    border-color: rgba(100,100,100,1);
+    background-color: rgba(100,100,100,1);
+    margin-bottom: 20px;
+}
+
+.instagram{
+    border-color: rgba(237,73,89,1);
+    background-color: rgba(237,73,89,1);
+    margin-bottom: 20px;
+}
+
+.github{
+    border-color: rgba(0,0,0,1);
+    background-color: rgba(0,0,0,1);
+    margin-bottom: 20px;
+}
+ 
+.input-group-text-60{
+    width: 40px;
+    text-align: center;
+}
+
+.or-seperator {
+    margin: 20px 0 10px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+.or-seperator i {
+    padding: 0 10px;
+    background: #ffffff;
+    position: relative;
+    top: -11px;
+    z-index: 1;
+}
+ 
