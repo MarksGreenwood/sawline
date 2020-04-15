@@ -9,7 +9,8 @@ import Dashboard from '@/views/Dashboard.vue'
 import Login from '@/views/Auth/Login.vue'
 import Register from '@/views/Auth/Register.vue'
 import Lock from '@/views/Auth/Lock.vue'
-import Verify from '@/views/Auth/Verify.vue'
+import Verification from '@/views/Auth/Verification.vue'
+import PasswordReset from '@/views/Auth/PasswordReset.vue'
 
 import store from '@/store'
 Vue.use(VueRouter)
@@ -27,7 +28,7 @@ const routes = [
         beforeEnter: (to, from, next) =>{
             if(!store.getters['auth/authenticated']){
                 return next({
-                    name: 'login'
+                    name: 'Login'
                 })
             }
 
@@ -37,7 +38,11 @@ const routes = [
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: Dashboard
+        component: Dashboard,
+        //meta: {
+            //middleware: [auth]
+        //}
+
     },
     {
         path: '/login',
@@ -55,10 +60,15 @@ const routes = [
         component: Lock
     },  
     {
-        path: '/verify',
-        name: 'Verify',
-        component: Verify,
-    },      
+        path: '/verification',
+        name: 'Verification',
+        component: Verification,
+    }, 
+    {
+        path: '/passwordreset',
+        name: 'PasswordReset',
+        component: PasswordReset,
+    },          
 ]
 
 const router = new VueRouter({

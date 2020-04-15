@@ -4,7 +4,7 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-header">Register</div>
+                    <div class="card-header">Password Reset</div>
 
                     <div class="card-body text-center mt-3 pt-3 mb-0 pb-0">
                         <h3><img class="d-inline-block align-top img-size40" src="@/assets/images/sawline_black.png" alt="Sawline" />
@@ -12,28 +12,7 @@
                     </div>
 
                     <div class="card-body text-center">
-                        <form @submit.prevent="submit">
-
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text input-group-text-60"><i class="fas fa-id-card"></i></span>
-                                </div>
-                                <input id="companyKey" name="companyKey" type="text" class="form-control" placeholder="organisation name \ key" v-model="form.organisation" required autofocus>                         
-                                <span class="invalid-feedback d-block" role="alert">
-                                    {{ this.organisationErr }}
-                                </span>
-                                
-                            </div>                            
-
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text input-group-text-60"><i class="fa fa-user"></i></span>
-                                </div>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="name" v-model="form.name" required>                         
-                                <span class="invalid-feedback d-block" role="alert">
-                                    {{ this.nameErr }}
-                                </span>
-                            </div>
+                        <form @submit.prevent="submit">                        
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -41,7 +20,7 @@
                                 </div>
                                 <input id="email" name="email" type="email" class="form-control" placeholder="email" v-model="form.email" required>                          
                                 <span class="invalid-feedback d-block" role="alert">
-                                    {{ this.emailErr }}
+                                    {{ /*this.errEmail*/ }}
                                 </span>
                             </div>
                             
@@ -51,7 +30,7 @@
                                 </div>          
                                 <input id="password" name="password" type="password" class="form-control" placeholder="password" v-model="form.password" required>
                                 <span class="invalid-feedback d-block" role="alert">
-                                    {{ this.passwordErr }}
+                                    {{ /*this.errPassword*/ }}
                                 </span>
                             </div>
 
@@ -64,7 +43,7 @@
 
                             <div class="input-group mb-3">
                                 <button type="submit" class="btn btn-success btn-block">
-                                    Register
+                                    Reset password
                                 </button>
                             </div>
 
@@ -84,57 +63,63 @@
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'Register',
+    name: 'ResetEmail',
     components: {
     },
     data() {
         return {
             form: {
-                organisation: '', 
-                name: '',
                 email: '',
                 password: '',
                 password_confirmation: '', 
+                appkey: '',
+                signature: '',
+                key: '',
             },
-            organisationErr: '',
-            emailErr: '',
-            nameErr: '',
-            passwordErr: '',
+        }
+    },
+    mounted() {
+        if(this.$route.query.key){
+            this.form.email = this.$route.query.email;
+            this.form.appkey = this.$route.query.appkey;
+            this.form.signature = this.$route.query.signature;
+            this.form.key = this.$route.query.key;
+
         }
     },
     methods: {
         ...mapActions({
-            register: 'auth/register'
+            resetPassword: 'auth/resetPassword'
         }),
         submit() {
-            this.register(this.form).then((response) => {
-
+             this.resetPassword(this.form).then((response) => {
+ 
                 if(this.isEmpty(response.errors))
                 {
-                    // Successful login
+                    //Successful verification
                     this.$router.replace({
-                        name: 'Verification'
+                        name: 'Login'
                     })
 
                     // Display all messages
                     this.processMessages(response.messages, 'success')
-             
+
                 }else{
 
                     // register errors
                     this.processMessages(response.errors, 'error')
-                    this.processErrors(response.errors, 'error')
-                }
+                }              
+          
+            }).catch((e) => {
 
-            }).catch(() => {
-                
-                // Too many registration attempts
+                // Failed verification
                 window.toast.fire({
                     icon: "error",
-                    title: 'Too many register attempts (6per minute only)'
+                    title: e
                 }); 
+
             })
-        },
+        },        
         isEmpty(obj){
             return Object.keys(obj).length===0
         },
@@ -153,14 +138,6 @@ export default {
                 title: message
             });             
 
-        },
-        processErrors(object){
-            var message = '';
-            for (var key in object) {
-                message = '';
-                message += object[key] 
-                this[key+'Err'] = message
-            }
         },
     }
 }

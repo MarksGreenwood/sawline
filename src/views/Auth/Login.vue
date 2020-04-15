@@ -44,7 +44,7 @@
                                 </button>
                             </div>
 
-                            <a class="nav-link" href="#">Forgotten Password</a> 
+                            <a class="nav-link" @click="passwordRecovery" href="#">Forgotten Password</a> 
                             <router-link class="nav-link" :to="{name: 'Register'}">Register</router-link> 
 
                         </form>
@@ -59,6 +59,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import axios from 'axios';
 
 export default {
     name: 'Login',
@@ -77,20 +78,83 @@ export default {
             login: 'auth/login'
         }),
         submit() {
-            this.login(this.form).then(() => {
-                this.$router.replace({
-                    name: 'Dashboard'
-                })
-            window.toast.fire({
-                icon: "success",
-                title: "Login attempt successful"
-            }); 
-            }).catch(() => {
+            this.login(this.form).then((response) => {
+
+                if(this.isEmpty(response.errors))
+                {
+                    // Successful login
+                    this.$router.replace({
+                        name: 'Dashboard'
+                    })
+
+                    // Display all messages
+                    this.processMessages(response.messages, 'success')
+             
+                }else{
+
+                    // Login errors
+                    this.processMessages(response.errors, 'error')
+                }
+
+            }).catch((e) => {
+
+                // Invaid login details
                 window.toast.fire({
                     icon: "error",
-                    title: "The user credentials are incorrect"
-                });
+                    title: e//"The user credentials are incorrect."
+                });  
             })
+        },
+        passwordRecovery(){
+            try {
+                axios.post("/auth/sendpasswordreset/sawline", {       
+                        email: this.form.email
+                    })
+                    .then((response) => {
+
+                        if(this.isEmpty(response.data.errors))
+                        {
+                            // Display all messages
+                            this.processMessages(response.data.messages, 'success')
+
+                        }else{
+
+                            // register errors
+                            this.processMessages(response.data.errors, 'error')
+                        }    
+                        
+                    })
+                    .catch(e => {
+
+                        // Unsuccessful password reset
+                        window.toast.fire({
+                            icon: "error",
+                            title: e
+                        })
+
+                    });
+            } catch (e) {
+
+                // Unknown error
+                window.toast.fire({
+                    icon: "error",
+                    title: e
+                })
+                
+            }
+        },
+        isEmpty(obj){
+            return Object.keys(obj).length===0
+        },
+        processMessages(object, type){
+
+            for (var key in object) {       
+                window.toast.fire({
+                    icon: type,
+                    title: object[key] 
+                }); 
+            }
+
         }
     },
 }

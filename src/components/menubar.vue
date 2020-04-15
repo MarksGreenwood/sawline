@@ -28,7 +28,7 @@
 
                 <ul v-if="authenticated" class="navbar-nav mr-auto"> 
                     <li class="nav-item">
-                        <router-link class="nav-link" :to="{name: 'Verify'}">Verify</router-link> 
+                        <router-link class="nav-link" :to="{name: 'Verification'}">Verification</router-link> 
                     </li>
                 </ul>                
 
