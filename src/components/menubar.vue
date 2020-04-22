@@ -95,6 +95,8 @@ export default {
         ...mapGetters({
             authenticated: 'auth/authenticated',
             user: 'auth/user',
+            verified: 'auth/verified',
+            activeOrganisation: 'auth/activeOrganisation',
         })
     },
     methods: ({
@@ -110,9 +112,7 @@ export default {
         },
         logout() {
             this.logoutAction().then(() => {
-                this.$router.replace({
-                    name: 'Home'
-                })
+                this.$router.push("/login");
             })
             window.toast.fire({
                 icon: "success",

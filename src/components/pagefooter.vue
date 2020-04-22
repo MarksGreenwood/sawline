@@ -6,4 +6,17 @@
         </div>
     </div>
 </footer>
-</template>
+</template> 
+
+<script>
+
+export default {
+    data() {
+        return {
+            search: '',
+        }
+    },    
+    mounted: function() {},
+    methods: {},
+}
+</script>

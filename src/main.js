@@ -36,7 +36,7 @@ store.dispatch('auth/attempt', localStorage.getItem('token')).then(() =>{
         router,
         store,
         render: h => h(App),
-        methods: {
-        }
-    }).$mount('#app')
+    }
+    ).$mount('#app')
 })
+ 

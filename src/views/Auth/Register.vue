@@ -18,7 +18,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text input-group-text-60"><i class="fas fa-id-card"></i></span>
                                 </div>
-                                <input id="companyKey" name="companyKey" type="text" class="form-control" placeholder="organisation name \ key" v-model="form.organisation" required autofocus>                         
+                                <input id="organisation" name="organisation" type="text" class="form-control" placeholder="organisation name \ key" v-model="form.organisation" required autofocus>                         
                                 <span class="invalid-feedback d-block" role="alert">
                                     {{ this.organisationErr }}
                                 </span>

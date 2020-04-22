@@ -4,12 +4,13 @@ export default {
     namespaced: true,
     state: {
         token: null,
-        user: null,
-        verified: null,
-        activeOrganisation: null,
+        authenticated: false,
+        user: [],
+        verified: '0',
+        activeOrganisation: 0,
     },
     getters:{
-        authenticated(state) {
+        token(state) {
             return state.token && state.user
         },
         user(state) {
@@ -20,12 +21,17 @@ export default {
         },
         activeOrganisation(state) {
             return state.activeOrganisation
-        }        
-        
+        },     
+        authenticated(state) {
+            return state.authenticated  
+        },  
     },
     mutations: {
         SET_TOKEN (state, token) {
             state.token = token
+        },
+        SET_AUTHENTICATED (state, authenticated) {
+            state.authenticated = authenticated
         },
         SET_USER (state, data) {
             state.user = data
@@ -77,39 +83,11 @@ export default {
                 dispatch('attempt', response.data.token)
                 return response.data
             }
-        },            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
-
-
-                   
+        },           
         async attempt ({ commit, state }, token) {
             if(token) {
                 commit('SET_TOKEN', token)
+                commit('SET_AUTHENTICATED', true)
             }
             if(!state.token){
                 return
@@ -122,6 +100,7 @@ export default {
                  commit('SET_ACTIVEORGANISATION', response.data.activeOrganisation)
             }catch(e){
                 commit('SET_TOKEN', null)
+                commit('SET_AUTHENTICATED', false)
                 commit('SET_USER', null)
                 commit('SET_VERIFIED', null)
                 commit('SET_ACTIVEORGANISATION', null)
@@ -132,12 +111,16 @@ export default {
             // Log the user ou and destroy token
             return axios.post('auth/logout/sawline').then(() => {
                 commit('SET_TOKEN', null)
-                commit('SET_USER', null)
+                commit('SET_AUTHENTICATED', false)
+                commit('SET_USER', [])
                 commit('SET_VERIFIED', null)
                 commit('SET_ACTIVEORGANISATION', null)
             })
 
 
+        },
+        setActiveOrganisation({ commit }, $value) {
+            commit('SET_ACTIVEORGANISATION', $value)
         }
 
     },

@@ -1,7 +1,7 @@
 <template>
 
 <!-- Topbar -->
-    <nav  v-if="authenticated" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <nav  v-show="authenticated" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
         <input type="checkbox" id="checkSidebar">
             <label for="checkSidebar">
@@ -73,32 +73,25 @@ export default {
             search: '',
         }
     },    
-    mounted() {
-        this.adjustSidebarClass();
-        if($('.sidebar').hasClass('smallSidebar')==false){
-            this.largeSideBar_Collapsed()
-        }else{
-            this.smallSideBar_Collapsed()
-        }        
-
-        this.$nextTick(() => {
-            window.addEventListener('resize', this.onWindowResize);
-        });        
-    },
-    created() {
-        this.adjustSidebarClass();
-        if($('.sidebar').hasClass('smallSidebar')==false){
-            this.largeSideBar_Collapsed()
-        }else{
-            this.smallSideBar_Collapsed()
-        }        
-
-        this.$nextTick(() => {
-            window.addEventListener('resize', this.onWindowResize);
-        });        
+    mounted: function() {
+        this.onWindowLoad()    
     },
     methods: {
-        searchData() {},   
+        searchData() {},  
+        onWindowLoad(){
+            this.adjustSidebarClass();
+
+            if($('.sidebar').hasClass('smallSidebar')==false){
+                this.largeSideBar_Collapsed()
+            }else{
+                this.smallSideBar_Collapsed()
+            }        
+
+            this.$nextTick(() => {
+                window.addEventListener('resize', this.onWindowResize);
+            });  
+
+        },
         onWindowResize(){
             this.adjustSidebarClass();
 
@@ -117,6 +110,7 @@ export default {
         },
         largeSideBar_Collapsed(){
             $(".topbar").css({marginLeft: 70});
+            $(".main-container").css({marginLeft: 70});
             $(".sidebar").css({width: 70});
             $(".sidebar").css({left: 0});
             $("#btn_sidebarShow").show()
@@ -125,6 +119,7 @@ export default {
         },
         smallSideBar_Collapsed(){
             $(".topbar").css({marginLeft: 20});
+            $(".main-container").css({marginLeft: 20});
             $(".sidebar").css({width: 70});
             $(".sidebar").css({left: -50});
             $("#btn_sidebarShow").show()
@@ -133,6 +128,7 @@ export default {
         },
         largeSideBar_Expanded(){
             $(".topbar").css({marginLeft: 250});
+            $(".main-container").css({marginLeft: 250});
             $(".sidebar").css({width: 250});
             $(".sidebar").css({left: 0});
             $("#btn_sidebarShow").hide();
@@ -141,6 +137,7 @@ export default {
         },
         smallSideBar_Expanded(){
             $(".topbar").css({marginLeft: 70});
+            $(".main-container").css({marginLeft: 70});
             $(".sidebar").css({width: 70});
             $(".sidebar").css({left: 0});
             $("#btn_sidebarShow").hide()

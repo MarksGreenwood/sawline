@@ -78,22 +78,22 @@ export default {
             login: 'auth/login'
         }),
         submit() {
+            this.$Progress.start()
             this.login(this.form).then((response) => {
 
                 if(this.isEmpty(response.errors))
                 {
                     // Successful login
-                    this.$router.replace({
-                        name: 'Dashboard'
-                    })
-
+                    this.$router.push("/home");
+ 
                     // Display all messages
                     this.processMessages(response.messages, 'success')
-             
+                    this.$Progress.finish();
                 }else{
 
                     // Login errors
                     this.processMessages(response.errors, 'error')
+                    this.$Progress.fail()
                 }
 
             }).catch((e) => {
@@ -103,6 +103,7 @@ export default {
                     icon: "error",
                     title: e//"The user credentials are incorrect."
                 });  
+                this.$Progress.fail()
             })
         },
         passwordRecovery(){

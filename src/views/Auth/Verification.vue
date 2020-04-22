@@ -78,9 +78,7 @@ export default {
                 if(this.isEmpty(response.errors))
                 {
                     //Successful verification
-                    this.$router.replace({
-                        name: 'Home'
-                    })
+                    this.$router.push("/Home");
 
                     // Display all messages
                     this.processMessages(response.messages, 'success')
